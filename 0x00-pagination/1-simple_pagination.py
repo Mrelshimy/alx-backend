@@ -36,7 +36,7 @@ class Server:
         assert isinstance(page_size, int)
         assert page > 0
         assert page_size > 0
-        dataset = self.__dataset()
+        dataset = self.dataset()
         try:
             limits = index_range(page, page_size)
             return dataset[limits[0]:limits[1]]
