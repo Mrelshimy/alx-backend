@@ -10,7 +10,7 @@ class LRUCache(BaseCaching):
     def __init__(self):
         """ Inistantiation method """
         super().__init__()
-        self.access_dict = {}
+        self.access_list = []
 
     def put(self, key, item):
         """ Add key, Item to cache.data """
@@ -18,14 +18,15 @@ class LRUCache(BaseCaching):
             return
         if key in self.cache_data:
             self.cache_data[key] = item
-            self.access_dict[key] += 1
+            self.access_list.append(
+                self.access_list.pop(self.access_list.index(key)))
             return
         if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-            LR_key = list(sorted(self.access_dict))[0]
+            LR_key = self.access_list[0]
             print(f"DISCARD: {LR_key}")
             del self.cache_data[LR_key]
-            del self.access_dict[LR_key]
-        self.access_dict[key] = 1
+            self.access_list.pop(0)
+        self.access_list.append(key)
         self.cache_data[key] = item
 
     def get(self, key):
