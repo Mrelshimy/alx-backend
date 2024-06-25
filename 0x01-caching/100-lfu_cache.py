@@ -21,7 +21,7 @@ class LFUCache(BaseCaching):
             self.access_dict += 1
             return
         if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-            LF_key = list(sorted(self.access_dict))[0]
+            LF_key = list(sorted(self.access_dict))[-1]
             print(f"DISCARD: {LF_key}")
             del self.cache_data[LF_key]
             self.access_dict[LF_key]
